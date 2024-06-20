@@ -3,17 +3,21 @@
 import Image from "next/image";
 import React, { useState } from 'react'
 import Link from 'next/link'
-import {ShoppingCart, Menu} from 'lucide-react';
-import { useUser } from "@clerk/nextjs";
+import {ShoppingCart, Menu, CircleUserRound} from 'lucide-react';
+import { UserButton, useUser } from "@clerk/nextjs";
+import SvgIcon from "@/public/svg/svgIcon";
 
 const Navbar = () => {
     const {user} = useUser();
     const [dropdownMenu, setDropdownMenu] = useState(false)
   return (
     <div className='sticky top-0 z-10 py-2 px-10 flex justify-between items-center bg-white'>
-        <Link href='/'>
-        <Image src="/logo.png" alt="logo" width={130} height={100} />
-        </Link>
+        <Link href='/' className="flex items-center space-x-4">
+      <div className='flex items-center justify-center bg-purple-600 rounded-lg p-4 w-16 h-16'>
+        <SvgIcon />
+      </div>
+      <h1 className=' text-heading2-bold font-bold cursor-pointer'><span className='text-purple-600'>Boutique</span> Loja</h1>
+    </Link>
         <div>
             <Link href='/'>Home</Link>
         </div>
@@ -32,6 +36,13 @@ const Navbar = () => {
                     <Link href='/orders' className='hover:text-purple-600'>Pedidos</Link>
                 </div>
             )}
+
+            {user ? 
+            (<UserButton afterSignOutUrl="/sign-in" />
+            ) : (<Link href='sign-in'>
+                <CircleUserRound />
+            </Link>
+        )}
         </div>
     </div>
   )
