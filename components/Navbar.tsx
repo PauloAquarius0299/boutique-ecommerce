@@ -6,10 +6,12 @@ import Link from 'next/link'
 import {ShoppingCart, Menu, CircleUserRound} from 'lucide-react';
 import { UserButton, useUser } from "@clerk/nextjs";
 import SvgIcon from "@/public/svg/svgIcon";
+import useCart from '@/lib/hooks/userCart';
 
 const Navbar = () => {
     const {user} = useUser();
     const [dropdownMenu, setDropdownMenu] = useState(false)
+    const cart = useCart();
   return (
     <div className='sticky top-0 z-10 py-2 px-10 flex justify-between items-center bg-white'>
         <Link href='/' className="flex items-center space-x-4">
@@ -25,7 +27,7 @@ const Navbar = () => {
         <div className="relative flex gap-3 items-center">
             <Link href='/cart' className='flex items-center gap-3 border rounded-lg px-2 py-1 hover:bg-black hover:text-white'>
             <ShoppingCart />
-            <p className='text-base-bold'>Carrinho (0)</p>
+            <p className='text-base-bold'>Carrinho ({cart.cartItems.length})</p>
             </Link>
 
            {user && <Menu className='cursor-pointer' onClick={()=> setDropdownMenu(!dropdownMenu)} />} 
