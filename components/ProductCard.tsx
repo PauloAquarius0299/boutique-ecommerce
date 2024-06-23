@@ -4,7 +4,12 @@ import HeartFavorite from './HeartFavorite'
 import Image from "next/image";
 import Link from "next/link";
 
-const ProductCard = ({ product}: {product: ProductType} ) => {
+interface ProductCardProps {
+  product: ProductType;
+  updateSignedInUser?: (updatedUser: UserType) => void;
+}
+
+const ProductCard = ({ product, updateSignedInUser}: ProductCardProps ) => {
 
   return (
     <Link
@@ -24,7 +29,7 @@ const ProductCard = ({ product}: {product: ProductType} ) => {
       </div>
       <div className="flex justify-between items-center">
         <p className="text-body-bold">${product.price}</p>
-        <HeartFavorite product={product}  />
+        <HeartFavorite product={product} updateSignedInUser={updateSignedInUser} />
       </div>
     </Link>
   );
